@@ -49,6 +49,7 @@ struct Node {
 struct LinkedList {
   struct Node * head;
   int size;
+  struct Node * tail;
 };
 
 struct Node * createNode(struct gamestate data) {
@@ -61,6 +62,7 @@ struct Node * createNode(struct gamestate data) {
 struct LinkedList initializeList() {
   struct LinkedList list;
   list.head = NULL;
+  list.tail = NULL;
   list.size = 0;
   return list;
 }
@@ -69,12 +71,11 @@ void append(struct LinkedList * list, struct gamestate data) {
   struct Node * newNode = createNode(data);
   if (list->head == NULL) {
     list->head = newNode;
+    list->tail = newNode;
   } else {
-    struct Node * current = list->head;
-    while (current->next != NULL) {
-      current = current->next;
-    }
-    current->next = newNode;
+    struct Node * last = list->tail;
+    last->next = newNode;
+    list->tail = newNode;
   }
   list->size++;
 }
